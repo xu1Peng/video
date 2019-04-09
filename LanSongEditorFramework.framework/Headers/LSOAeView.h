@@ -107,6 +107,47 @@ typedef void (^LSOAnimationCompletionBlock)(BOOL animationFinished);
 -(BOOL)updateVideoImageWithKey:(NSString*)key url:(NSURL *)url setting:(LSOAEVideoSetting *)setting;
 
 /**
+ 替换图片
+ 根据Ae中的图片名字替换对应的图片;
+ 
+ @param name "json中的图片名字;
+ @param image 图片对象
+ @return 替换成功返回YES
+ */
+-(BOOL)updateImageByName:(NSString*)name image:(UIImage *)image;
+
+
+/**
+ 替换图片
+ 根据Ae中的图片名字替换对应的图片;
+ 
+ @param name "json中的图片名字;
+ @param image 图片对象
+ @param needCrop 如果替换的图片和json的图片宽高不一致,是否SDK内部裁剪(内部是居中裁剪);
+ @return 替换成功返回YES
+ */
+-(BOOL)updateImageByName:(NSString*)name image:(UIImage *)image needCrop:(BOOL)needCrop;
+
+/**
+ 根据名字 把原来显示图片的地方替换为视频;
+ 
+ @param name "json中的图片名字;
+ @param url 视频文件路径
+ @return 可以替换返回YES;
+ */
+-(BOOL)updateVideoImageByName:(NSString*)name url:(NSURL *)url;
+
+
+/**
+ 根据名字 把原来显示图片的地方替换为视频;
+ 
+  @param name "json中的图片名字;
+ @param url 视频文件路径
+ @param setting 视频文件在处理中的选项设置;
+ @return 可以替换返回YES;
+ */
+-(BOOL)updateVideoImageByName:(NSString*)name url:(NSURL *)url setting:(LSOAEVideoSetting *)setting;
+/**
  当设置updateVideoImageWithKey后, 你可以通过这个来调整视频中每一帧;
 
  @param key json中的refId, image_0 image_1等, 给哪个id设置回调

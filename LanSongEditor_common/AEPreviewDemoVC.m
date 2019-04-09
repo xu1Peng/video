@@ -161,15 +161,18 @@
     if(json1Path!=nil){
         LSOAeView *jsonView=[aePreview addAEJsonPath:json1Path];
         
-        if([moduleName isEqualToString:@"aobama"]){  //如果是奥巴马模板的话,则直接填入图片;
+        if([moduleName isEqualToString:@"aobama"]){
+            
+            //如果是奥巴马模板的话,则直接填入图片;
             UIImage *value=[LSOImageUtil createImageWithText:@"演示微商小视频,文字可以任意修改,可以替换为图片,可以替换为视频;" imageSize:CGSizeMake(255, 185)];
             [jsonView updateImageWithKey:@"image_0" image:value];
-        }else{ //给解析到的json替换图片
+        }else{
+            //给解析到的json替换图片
             for (int i=0; i<jsonView.imageInfoArray.count; i++) {
-                
                 
                 //因为我们提供的模板文件名和图片ID是一一对应的. 比如图片ID="image_0"的图片, 他对应的替换图片是xxx_img_0, 则我们有规律
                 //所有这里可以用for循环来替换;
+                
                 NSString *key=[NSString stringWithFormat:@"image_%d",i];
                 UIImage *value=[UIImage imageNamed:[NSString stringWithFormat:@"%@_img_%d",moduleName,i]];
                 [jsonView updateImageWithKey:key image:value];
@@ -211,7 +214,8 @@
     json1Path=[[NSBundle mainBundle] pathForResource:moduleName ofType:@"json"];
     if(json1Path!=nil){
         LSOAeView *aeView=[aeExecute addAEJsonPath:json1Path];
-        if([moduleName isEqualToString:@"aobama"]){  //如果是奥巴马模板的话,则直接填入图片;
+        if([moduleName isEqualToString:@"aobama"]){
+            //如果是奥巴马模板的话,则直接填入图片;
             UIImage *value=[LSOImageUtil createImageWithText:@"演示微商小视频,文字可以任意修改,可以替换为图片,可以替换为视频;" imageSize:CGSizeMake(255, 185)];
             [aeView updateImageWithKey:@"image_0" image:value];
         }else{

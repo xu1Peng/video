@@ -92,13 +92,13 @@
      */
     [LSOFileUtil deleteAllSDKFiles];
     [self initView];
-      [self testFile];
+    
+    [self testFile];
 }
 - (void)viewDidAppear:(BOOL)animated
 {
     [LanSongUtils setViewControllerPortrait];
-}
-/**
+} /**
  点击后, 进去界面.
  */
 -(void)onClicked:(UIView *)sender

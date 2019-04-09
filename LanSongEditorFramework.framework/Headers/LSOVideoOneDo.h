@@ -78,8 +78,17 @@
 /**
  视频编码码率;
  (起到视频压缩的作用)
+ 我们不建议你设置, 因为我们内部会根据不同的视频选择不同的码率
  */
 @property (readwrite,nonatomic)int bitrate;
+
+
+
+/**
+ 设置压缩百分比;
+ 我们不建议你设置, 因为我们内部会根据不同的视频选择不同的码率
+ */
+-(void)setCompressPercent:(CGFloat)percent;
 
 /**
  视频增加UI图层;

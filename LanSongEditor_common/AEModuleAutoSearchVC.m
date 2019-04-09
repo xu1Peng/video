@@ -54,15 +54,15 @@
         make.size.mas_equalTo(CGSizeMake(size.width, 40));
     }];
     
-//        if(_AeType==kAEDEMO_AOBAMA){
-//            [self testAobama];
-//        }else if(_AeType==kAEDEMO_ZAO_AN){  //早安;
-//            [self testZaoan];
-//        }else if(_AeType==kAEDEMO_XIANZI){ //紫霞仙子
-//            [self testZixianXiaZi];
-//        }else{
+    //        if(_AeType==kAEDEMO_AOBAMA){
+    //            [self testAobama];
+    //        }else if(_AeType==kAEDEMO_ZAO_AN){  //早安;
+    //            [self testZaoan];
+    //        }else if(_AeType==kAEDEMO_XIANZI){ //紫霞仙子
+    //            [self testZixianXiaZi];
+    //        }else{
     [self testJson];
-//        } 
+    //        }
 }
 -(void)testAobama
 {
@@ -182,7 +182,10 @@
 }
 -(void) testJson
 {
+    //重置数据源
     [self resetData];
+    
+    //获取数据并保存
     [self saveAssetToDir];
     
     //-------------一下是正式开始...
@@ -197,22 +200,30 @@
         LSDELETE(@"----------file name is :%@",filename)
         [self parseFileName:filename dirPath:dirPath];
     }
-        //开始创建, 先增加一个视频;
-        if(videoURL!=nil){
-             drawpadExecute=[[DrawPadAEExecute alloc] initWithURL:videoURL];
-        }else{
-             drawpadExecute=[[DrawPadAEExecute alloc] init];
-        }
     
-        //增加Ae json层
-        LSOAeView *aeView=[drawpadExecute addAEJsonPath:jsonPath];
-        [aeView updateImageWithKey:@"image_0" image:jsonImage0];
-        
-        //再增加mv图层;
-        [drawpadExecute addMVPen:mvColor withMask:mvMask];
-        
-        //开始执行
-        [self startAE];
+    
+    
+    //开始创建, 先增加一个视频;
+    if(videoURL!=nil){
+        drawpadExecute=[[DrawPadAEExecute alloc] initWithURL:videoURL];
+    }else{
+        drawpadExecute=[[DrawPadAEExecute alloc] init];
+    }
+    
+    //增加Ae json层
+    LSOAeView *aeView=[drawpadExecute addAEJsonPath:jsonPath];
+    
+    //        for(LSOAeImage *info in aeView.imageInfoArray){
+    //            LSOLog(@"id:%@, width:%d %d, name:%@",info.imgId,info.imgWidth,info.imgHeight,info.imgName);
+    //        }
+    
+    [aeView updateImageByName:@"img_0.png" image:jsonImage0];  //<----通过名字来替换图片.
+    
+    //再增加mv图层;
+    [drawpadExecute addMVPen:mvColor withMask:mvMask];
+    
+    //开始执行
+    [self startAE];
 }
 
 /**
@@ -225,6 +236,7 @@
     NSString *mvMask=[LSOFileUtil pathForResource:@"aobama_mvMask" ofType:@"mp4"];
     NSString *jsonPath=[LSOFileUtil pathForResource:@"aobama" ofType:@"json"];
     UIImage *jsonImage0=[LSOImageUtil createImageWithText:@"演示微商小视频,文字可以任意修改,可以替换为图片,可以替换为视频;" imageSize:CGSizeMake(255, 185)];
+    
     NSString *dirPath=[self copyAEAssetToDir:@"aobama" srcPath:video1 dstFileName:@"aobama_c1.mp4"];
     dirPath=[self copyAEAssetToDir:@"aobama" srcPath:jsonPath dstFileName:@"aobama_c2.json"];
     dirPath= [self copyAEAssetToDir:@"aobama" srcPath:mvColor dstFileName:@"aobama_c3_mvColor.mp4"];
@@ -237,7 +249,7 @@
 }
 -(void)parseFileName:(NSString *)fileName dirPath:(NSString *)dir
 {
-     NSString *filePath=[NSString stringWithFormat:@"%@/%@",dir,fileName];
+    NSString *filePath=[NSString stringWithFormat:@"%@/%@",dir,fileName];
     if(fileName==nil || [LSOFileUtil  fileExist:filePath]==NO){
         return ;
     }
@@ -267,7 +279,7 @@
         LSOLog_i(@"当前在第 %d 层",index);
         if([fileSuffix isEqualToString:@"mp4"]){
             if([fileName containsString:@"mvColor"]){
-                 mvColor=[LSOFileUtil filePathToURL:filePath];
+                mvColor=[LSOFileUtil filePathToURL:filePath];
             }else if([fileName containsString:@"mvMask"]){
                 mvMask=[LSOFileUtil filePathToURL:filePath];
             }else{
